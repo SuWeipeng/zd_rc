@@ -1,0 +1,6 @@
+projects:
+  stm32f103c8:
+  - project_cubemx.yaml
+settings:
+  export_dir:
+  - generate_project
