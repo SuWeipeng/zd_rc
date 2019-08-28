@@ -11,6 +11,7 @@ common:
   - Drivers/STM32F1xx_HAL_Driver/Inc
   - Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
   - Drivers/nRF24L01_Driver/Inc
+  - Drivers/ssd1306_Driver
   - Inc
   - Libraries
   - Libraries/AP_Math
@@ -29,6 +30,7 @@ common:
     Drivers:
     - Drivers/STM32F1xx_HAL_Driver/Src
     - Drivers/nRF24L01_Driver/Src
+    - Drivers/ssd1306_Driver
     Middlewares:
     - Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c
     - Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c
