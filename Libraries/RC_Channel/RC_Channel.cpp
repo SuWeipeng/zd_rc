@@ -3,6 +3,8 @@
 #include "RC_Channel.h"
 #include "ssd1306.h"
 
+#define CHECK_SIGN(x,y) (((x>0.0f&&y>0.0f) || (x<0.0f&&y<0.0f)) ? 1 : 0)
+
 RC_Channel::RC_Channel(ADC_HandleTypeDef* hadc)
   : _hadc(hadc)
 {
@@ -47,6 +49,11 @@ float RC_Channel::vel_x(int8_t inv)
 #if ADC_VCP_DEBUG == 1  
   VCPSend((uint8_t *)buffer, strlen(buffer));
 #endif 
+  static float last_ret = ret;
+  if((last_ret != ret) && CHECK_SIGN(last_ret, ret) == 0){
+    ssd1306_Fill(Black);
+    last_ret = ret;
+  }
   ssd1306_SetCursor(2, 18*0);
   ssd1306_WriteString(buffer, Font_7x10, White);
   ssd1306_UpdateScreen();
@@ -81,6 +88,11 @@ float RC_Channel::vel_y(int8_t inv)
 #if ADC_VCP_DEBUG == 1  
   VCPSend((uint8_t *)buffer, strlen(buffer));
 #endif  
+  static float last_ret = ret;
+  if((last_ret != ret) && CHECK_SIGN(last_ret, ret) == 0){
+    ssd1306_Fill(Black);
+    last_ret = ret;
+  }
   ssd1306_SetCursor(2, 18*1);
   ssd1306_WriteString(buffer, Font_7x10, White);
   ssd1306_UpdateScreen();  
@@ -115,6 +127,11 @@ float RC_Channel::rad_z(int8_t inv)
 #if ADC_VCP_DEBUG == 1  
   VCPSend((uint8_t *)buffer, strlen(buffer));
 #endif 
+  static float last_ret = ret;
+  if((last_ret != ret) && CHECK_SIGN(last_ret, ret) == 0){
+    ssd1306_Fill(Black);
+    last_ret = ret;
+  }
   ssd1306_SetCursor(2, 18*2);
   ssd1306_WriteString(buffer, Font_7x10, White);
   ssd1306_UpdateScreen(); 
