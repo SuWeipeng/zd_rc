@@ -40,6 +40,8 @@ float RC_Channel::vel_x(int8_t inv)
   
   if(inv == -1) ret *= inv;
 
+  ret = constrain_float(ret, -VEL_X_MAX_M_S, VEL_X_MAX_M_S);
+  
   char buffer[30];
   sprintf(buffer, "vel_x:%.3f m/s\r\n", ret);  
 #if ADC_VCP_DEBUG == 1  
@@ -49,7 +51,7 @@ float RC_Channel::vel_x(int8_t inv)
   ssd1306_WriteString(buffer, Font_7x10, White);
   ssd1306_UpdateScreen();
   
-  return constrain_float(ret, -VEL_X_MAX_M_S, VEL_X_MAX_M_S);
+  return ret;
 }
 
 float RC_Channel::vel_y(int8_t inv)
@@ -72,6 +74,8 @@ float RC_Channel::vel_y(int8_t inv)
   
   if(inv == -1) ret *= inv;
 
+  ret = constrain_float(ret, -VEL_Y_MAX_M_S, VEL_Y_MAX_M_S);
+  
   char buffer[30];
   sprintf(buffer, "vel_y:%.3f m/s\r\n", ret);  
 #if ADC_VCP_DEBUG == 1  
@@ -81,7 +85,7 @@ float RC_Channel::vel_y(int8_t inv)
   ssd1306_WriteString(buffer, Font_7x10, White);
   ssd1306_UpdateScreen();  
   
-  return constrain_float(ret, -VEL_Y_MAX_M_S, VEL_Y_MAX_M_S);
+  return ret;
 }
 
 float RC_Channel::rad_z(int8_t inv)
@@ -104,6 +108,8 @@ float RC_Channel::rad_z(int8_t inv)
   
   if(inv == -1) ret *= inv;
 
+  ret = constrain_float(ret, -RAD_Z_MAX_RAD_S, RAD_Z_MAX_RAD_S);
+  
   char buffer[30];
   sprintf(buffer, "rad_z:%.3frad/s\r\n", ret);  
 #if ADC_VCP_DEBUG == 1  
@@ -113,5 +119,5 @@ float RC_Channel::rad_z(int8_t inv)
   ssd1306_WriteString(buffer, Font_7x10, White);
   ssd1306_UpdateScreen(); 
   
-  return constrain_float(ret, -RAD_Z_MAX_RAD_S, RAD_Z_MAX_RAD_S);
+  return ret;
 }

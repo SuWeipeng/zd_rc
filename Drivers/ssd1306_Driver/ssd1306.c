@@ -229,11 +229,12 @@ char ssd1306_WriteString(char* str, FontDef Font, SSD1306_COLOR color)
 {
   // Write until null-byte
   while (*str) {
-    if (ssd1306_WriteChar(*str, Font, color) != *str) {
-      // Char could not be written
-      return *str;
+    if(*str != '\r' && *str != '\n'){
+      if (ssd1306_WriteChar(*str, Font, color) != *str) {
+        // Char could not be written
+        return *str;
+      }
     }
-
     // Next char
     str++;
   }
