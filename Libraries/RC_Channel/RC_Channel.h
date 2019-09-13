@@ -33,6 +33,7 @@ public:
   float    vel_x(int8_t inv = 1);
   float    vel_y(int8_t inv = 1);
   float    rad_z(int8_t inv = 1);
+  float    vel_y_or_z(int8_t inv = 1, int8_t y_or_z = 0);
   
 private:
   ADC_HandleTypeDef* _hadc;
