@@ -1,0 +1,3 @@
+[submodule "Libraries/mavlink"]
+	path = Libraries/mavlink
+	url = https://github.com/SuWeipeng/car_mavlink.git
