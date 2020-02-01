@@ -6,7 +6,7 @@
 #define ADC_CHANNEL_CNT 4
 #define ADC_BUFF_LEN    ADC_CHANNEL_CNT*2
 #define ADC_DEAD_ZONE   300
-#define ADC_VCP_DEBUG   2
+#define ADC_VCP_DEBUG   0
 
 #define ADC_CHANNEL_X_MIN 0
 #define ADC_CHANNEL_Y_MIN 30

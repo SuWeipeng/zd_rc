@@ -22,14 +22,17 @@ void update_mavlink(void)
           mavlink_simple_t packet;
           mavlink_msg_simple_decode(&msg_receive, &packet);
 
+					/*
           char buffer[32];
           sprintf(buffer, "%d\r\n", packet.data);
           VCPSend((uint8_t *)buffer, strlen(buffer));
+					*/
 
           mavlink_message_t msg_ack;
           mavlink_msg_velocity_pack(0, 0, &msg_ack, vel.vel_x, vel.vel_y, vel.rad_z);
           int len = mavlink_msg_to_send_buffer((uint8_t *)myAckPayload, &msg_ack);
           NRF24_writeAckPayload(1, myAckPayload, len);
+					VCPSend((uint8_t *)myAckPayload, len);
           break;
         }
         }
