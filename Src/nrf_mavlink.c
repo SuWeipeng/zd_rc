@@ -1,3 +1,4 @@
+#include "stm32f1xx_hal.h"
 #include "nrf_mavlink.h"
 #include "MY_NRF24.h"
 #include "usb_device.h"
@@ -7,8 +8,16 @@ char myAckPayload[32] = "Ack by firedragon_rc";
 
 vel_target vel;
 
+uint32_t time_stamp;
+
 void update_mavlink(void)
 {
+  if(HAL_GetTick() - time_stamp > 500){
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
+  } else {
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+  }
+  
   if(NRF24_available()) {
     NRF24_read(myRxData, 32);
     uint8_t i;
@@ -20,6 +29,8 @@ void update_mavlink(void)
         case MAVLINK_MSG_ID_SIMPLE: {
           mavlink_simple_t packet;
           mavlink_msg_simple_decode(&msg_receive, &packet);
+          
+          time_stamp = HAL_GetTick();
 
           /*
           char buffer[32];

@@ -111,6 +111,8 @@ int main(void)
   MX_SPI2_Init();
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);
   NRF24_begin(NRF_CE_GPIO_Port, NRF_CS_Pin, NRF_CE_Pin, hspi1);
   printRadioSettings();
 
