@@ -51,12 +51,12 @@ float RC_Channel::vel_x(int8_t inv)
 #endif 
   static float last_ret = ret;
   if((last_ret != ret) && CHECK_SIGN(last_ret, ret) == 0){
-    ssd1306_Fill(Black);
+    SSD1306_Fill(SSD1306_COLOR_BLACK);
     last_ret = ret;
   }
-  ssd1306_SetCursor(2, 18*0);
-  ssd1306_WriteString(buffer, Font_7x10, White);
-  ssd1306_UpdateScreen();
+  SSD1306_GotoXY(2, 18*0);
+  SSD1306_Puts(buffer, &Font_7x10, SSD1306_COLOR_WHITE);
+  SSD1306_UpdateScreen();
   
   return ret;
 }
@@ -90,12 +90,12 @@ float RC_Channel::vel_y(int8_t inv)
 #endif  
   static float last_ret = ret;
   if((last_ret != ret) && CHECK_SIGN(last_ret, ret) == 0){
-    ssd1306_Fill(Black);
+    SSD1306_Fill(SSD1306_COLOR_BLACK);
     last_ret = ret;
   }
-  ssd1306_SetCursor(2, 18*1);
-  ssd1306_WriteString(buffer, Font_7x10, White);
-  ssd1306_UpdateScreen();  
+  SSD1306_GotoXY(2, 18*1);
+  SSD1306_Puts(buffer, &Font_7x10, SSD1306_COLOR_WHITE);
+  SSD1306_UpdateScreen();  
   
   return ret;
 }
@@ -129,12 +129,12 @@ float RC_Channel::rad_z(int8_t inv)
 #endif 
   static float last_ret = ret;
   if((last_ret != ret) && CHECK_SIGN(last_ret, ret) == 0){
-    ssd1306_Fill(Black);
+    SSD1306_Fill(SSD1306_COLOR_BLACK);
     last_ret = ret;
   }
-  ssd1306_SetCursor(2, 18*2);
-  ssd1306_WriteString(buffer, Font_7x10, White);
-  ssd1306_UpdateScreen(); 
+  SSD1306_GotoXY(2, 18*2);
+  SSD1306_Puts(buffer, &Font_7x10, SSD1306_COLOR_WHITE);
+  SSD1306_UpdateScreen(); 
   
   return ret;
 }
@@ -198,12 +198,12 @@ float RC_Channel::vel_y_or_z(int8_t inv, int8_t y_or_z)
 #endif 
   static float last_ret = ret;
   if((last_ret != ret) && CHECK_SIGN(last_ret, ret) == 0){
-    ssd1306_Fill(Black);
+    SSD1306_Fill(SSD1306_COLOR_BLACK);
     last_ret = ret;
   }
-  ssd1306_SetCursor(2, 18*2);
-  ssd1306_WriteString(buffer, Font_7x10, White);
-  ssd1306_UpdateScreen(); 
+  SSD1306_GotoXY(2, 18*2);
+  SSD1306_Puts(buffer, &Font_7x10, SSD1306_COLOR_WHITE);
+  SSD1306_UpdateScreen(); 
   
   return ret;
 }

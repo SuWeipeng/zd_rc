@@ -90,8 +90,8 @@ extern SPI_HandleTypeDef SSD1306_SPI_PORT;
 
 // Enumeration for screen colors
 typedef enum {
-    Black = 0x00, // Black color, no pixel
-    White = 0x01  // Pixel is set. Color depends on OLED
+    SSD1306_COLOR_BLACK = 0x00, // Black color, no pixel
+    SSD1306_COLOR_WHITE = 0x01  // Pixel is set. Color depends on OLED
 } SSD1306_COLOR;
 
 // Struct to store transformations
@@ -103,13 +103,13 @@ typedef struct {
 } SSD1306_t;
 
 // Procedure definitions
-void ssd1306_Init(void);
-void ssd1306_Fill(SSD1306_COLOR color);
-void ssd1306_UpdateScreen(void);
+uint8_t SSD1306_Init(void);
+void SSD1306_Fill(SSD1306_COLOR color);
+void SSD1306_UpdateScreen(void);
 void ssd1306_DrawPixel(uint8_t x, uint8_t y, SSD1306_COLOR color);
-char ssd1306_WriteChar(char ch, FontDef Font, SSD1306_COLOR color);
-char ssd1306_WriteString(char* str, FontDef Font, SSD1306_COLOR color);
-void ssd1306_SetCursor(uint8_t x, uint8_t y);
+char ssd1306_WriteChar(char ch, FontDef* Font, SSD1306_COLOR color);
+char SSD1306_Puts(char* str, FontDef* Font, SSD1306_COLOR color);
+void SSD1306_GotoXY(uint8_t x, uint8_t y);
 
 // Low-level procedures
 void ssd1306_Reset(void);

@@ -14,6 +14,7 @@ common:
   - Drivers/ssd1306_Driver
   - Inc
   - Libraries
+  - Libraries/AP_Show
   - Libraries/AP_Math
   - Libraries/mavlink
   - Libraries/mavlink/car
@@ -37,6 +38,7 @@ common:
     - Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c
     - Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c
     Library:
+    - Libraries/AP_Show
     - Libraries/AP_Math
     - Libraries/RC_Channel
     Src:

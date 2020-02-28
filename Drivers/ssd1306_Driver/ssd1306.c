@@ -63,7 +63,7 @@ static uint8_t SSD1306_Buffer[SSD1306_WIDTH * SSD1306_HEIGHT / 8];
 static SSD1306_t SSD1306;
 
 // Initialize the oled screen
-void ssd1306_Init(void)
+uint8_t SSD1306_Init(void)
 {
   // Reset OLED
   ssd1306_Reset();
@@ -131,31 +131,33 @@ void ssd1306_Init(void)
   ssd1306_WriteCommand(0xAF); //--turn on SSD1306 panel
 
   // Clear screen
-  ssd1306_Fill(Black);
+  SSD1306_Fill(SSD1306_COLOR_BLACK);
 
   // Flush buffer to screen
-  ssd1306_UpdateScreen();
+  SSD1306_UpdateScreen();
 
   // Set default values for screen object
   SSD1306.CurrentX = 0;
   SSD1306.CurrentY = 0;
 
   SSD1306.Initialized = 1;
+  
+  return 1;
 }
 
 // Fill the whole screen with the given color
-void ssd1306_Fill(SSD1306_COLOR color)
+void SSD1306_Fill(SSD1306_COLOR color)
 {
   /* Set memory */
   uint32_t i;
 
   for(i = 0; i < sizeof(SSD1306_Buffer); i++) {
-    SSD1306_Buffer[i] = (color == Black) ? 0x00 : 0xFF;
+    SSD1306_Buffer[i] = (color == SSD1306_COLOR_BLACK) ? 0x00 : 0xFF;
   }
 }
 
 // Write the screenbuffer with changed to the screen
-void ssd1306_UpdateScreen(void)
+void SSD1306_UpdateScreen(void)
 {
   uint8_t i;
   for(i = 0; i < 8; i++) {
@@ -183,7 +185,7 @@ void ssd1306_DrawPixel(uint8_t x, uint8_t y, SSD1306_COLOR color)
   }
 
   // Draw in the right color
-  if(color == White) {
+  if(color == SSD1306_COLOR_WHITE) {
     SSD1306_Buffer[x + (y / 8) * SSD1306_WIDTH] |= 1 << (y % 8);
   } else {
     SSD1306_Buffer[x + (y / 8) * SSD1306_WIDTH] &= ~(1 << (y % 8));
@@ -194,21 +196,21 @@ void ssd1306_DrawPixel(uint8_t x, uint8_t y, SSD1306_COLOR color)
 // ch         => char om weg te schrijven
 // Font     => Font waarmee we gaan schrijven
 // color     => Black or White
-char ssd1306_WriteChar(char ch, FontDef Font, SSD1306_COLOR color)
+char ssd1306_WriteChar(char ch, FontDef* Font, SSD1306_COLOR color)
 {
   uint32_t i, b, j;
 
   // Check remaining space on current line
-  if (SSD1306_WIDTH <= (SSD1306.CurrentX + Font.FontWidth) ||
-      SSD1306_HEIGHT <= (SSD1306.CurrentY + Font.FontHeight)) {
+  if (SSD1306_WIDTH <= (SSD1306.CurrentX + Font->FontWidth) ||
+      SSD1306_HEIGHT <= (SSD1306.CurrentY + Font->FontHeight)) {
     // Not enough space on current line
     return 0;
   }
 
   // Use the font to write
-  for(i = 0; i < Font.FontHeight; i++) {
-    b = Font.data[(ch - 32) * Font.FontHeight + i];
-    for(j = 0; j < Font.FontWidth; j++) {
+  for(i = 0; i < Font->FontHeight; i++) {
+    b = Font->data[(ch - 32) * Font->FontHeight + i];
+    for(j = 0; j < Font->FontWidth; j++) {
       if((b << j) & 0x8000)  {
         ssd1306_DrawPixel(SSD1306.CurrentX + j, (SSD1306.CurrentY + i), (SSD1306_COLOR) color);
       } else {
@@ -218,14 +220,14 @@ char ssd1306_WriteChar(char ch, FontDef Font, SSD1306_COLOR color)
   }
 
   // The current space is now taken
-  SSD1306.CurrentX += Font.FontWidth;
+  SSD1306.CurrentX += Font->FontWidth;
 
   // Return written char for validation
   return ch;
 }
 
 // Write full string to screenbuffer
-char ssd1306_WriteString(char* str, FontDef Font, SSD1306_COLOR color)
+char SSD1306_Puts(char* str, FontDef* Font, SSD1306_COLOR color)
 {
   // Write until null-byte
   while (*str) {
@@ -244,7 +246,7 @@ char ssd1306_WriteString(char* str, FontDef Font, SSD1306_COLOR color)
 }
 
 // Position the cursor
-void ssd1306_SetCursor(uint8_t x, uint8_t y)
+void SSD1306_GotoXY(uint8_t x, uint8_t y)
 {
   SSD1306.CurrentX = x;
   SSD1306.CurrentY = y;

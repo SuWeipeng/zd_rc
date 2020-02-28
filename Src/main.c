@@ -126,7 +126,7 @@ int main(void)
 	
   NRF24_startListening();
   
-  ssd1306_Init();
+  SSD1306_Init();
   
   setup();
   /* USER CODE END 2 */
