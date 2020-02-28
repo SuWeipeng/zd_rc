@@ -47,8 +47,8 @@ void loop(void)
     vel.rad_z = rc->vel_y_or_z(-1, 1);
   }
   
-  if(HAL_GetTick()-time_stamp >= 500){
-    show->show_page(1);
+  if(HAL_GetTick()-time_stamp >= 100){
+    show->show_page(0);
     
     // Page 1
     static uint32_t cnt = 0;
