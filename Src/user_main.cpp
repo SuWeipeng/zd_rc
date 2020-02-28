@@ -23,6 +23,7 @@ void loop(void)
 {
   static GPIO_PinState key_last;
   static bool mode;
+  static uint32_t time_stamp;
   GPIO_PinState key = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_10);
   
   vel.vel_x = rc->vel_x();
@@ -42,7 +43,11 @@ void loop(void)
     vel.rad_z = rc->vel_y_or_z(-1, 1);
   }
   
-  show->update();
+  if(HAL_GetTick()-time_stamp >= 100){
+    show->show_page(0);
+    show->update();
+    time_stamp = HAL_GetTick();
+  }
 }
 
 #if defined(__GNUC__) && defined(__cplusplus)
