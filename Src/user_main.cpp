@@ -1,10 +1,12 @@
 #include "nrf_mavlink.h"
 #include "RC_Channel.h"
+#include "AP_Show.h"
 
 extern ADC_HandleTypeDef hadc1;
 extern vel_target vel;
 
 RC_Channel* rc;
+AP_Show* show;
 
 #if defined(__GNUC__) && defined(__cplusplus)
 extern "C" {
@@ -13,6 +15,8 @@ extern "C" {
 void setup(void)
 {
   rc = new RC_Channel(&hadc1);
+  show = new AP_Show();
+  show->init(AP_Show::SSD1306_OLED_SPI);
 }
 
 void loop(void)
@@ -37,6 +41,8 @@ void loop(void)
   } else {
     vel.rad_z = rc->vel_y_or_z(-1, 1);
   }
+  
+  show->update();
 }
 
 #if defined(__GNUC__) && defined(__cplusplus)

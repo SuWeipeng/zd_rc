@@ -1,7 +1,7 @@
 #include <AP_Math.h>
 #include "usb_device.h"
 #include "RC_Channel.h"
-#include "ssd1306.h"
+#include "AP_Show.h"
 
 #define CHECK_SIGN(x,y) (((x>0.0f&&y>0.0f) || (x<0.0f&&y<0.0f)) ? 1 : 0)
 
@@ -43,20 +43,15 @@ float RC_Channel::vel_x(int8_t inv)
   if(inv == -1) ret *= inv;
 
   ret = constrain_float(ret, -VEL_X_MAX_M_S, VEL_X_MAX_M_S);
+  if(is_zero(ret)) ret = 0.0f;
   
   char buffer[30];
-  sprintf(buffer, "vel_x:%.3f m/s\r\n", ret);  
+  sprintf(buffer, "vel_x:%.3f\r\n", ret);  
 #if ADC_VCP_DEBUG == 1  
   VCPSend((uint8_t *)buffer, strlen(buffer));
 #endif 
-  static float last_ret = ret;
-  if((last_ret != ret) && CHECK_SIGN(last_ret, ret) == 0){
-    SSD1306_Fill(SSD1306_COLOR_BLACK);
-    last_ret = ret;
-  }
-  SSD1306_GotoXY(2, 18*0);
-  SSD1306_Puts(buffer, &Font_7x10, SSD1306_COLOR_WHITE);
-  SSD1306_UpdateScreen();
+  
+  AP_Show::get_instance()->page_write(0, 0, buffer, "rc output");
   
   return ret;
 }
@@ -82,20 +77,14 @@ float RC_Channel::vel_y(int8_t inv)
   if(inv == -1) ret *= inv;
 
   ret = constrain_float(ret, -VEL_Y_MAX_M_S, VEL_Y_MAX_M_S);
+  if(is_zero(ret)) ret = 0.0f;
   
   char buffer[30];
-  sprintf(buffer, "vel_y:%.3f m/s\r\n", ret);  
+  sprintf(buffer, "vel_y:%.3f\r\n", ret);  
 #if ADC_VCP_DEBUG == 1  
   VCPSend((uint8_t *)buffer, strlen(buffer));
 #endif  
-  static float last_ret = ret;
-  if((last_ret != ret) && CHECK_SIGN(last_ret, ret) == 0){
-    SSD1306_Fill(SSD1306_COLOR_BLACK);
-    last_ret = ret;
-  }
-  SSD1306_GotoXY(2, 18*1);
-  SSD1306_Puts(buffer, &Font_7x10, SSD1306_COLOR_WHITE);
-  SSD1306_UpdateScreen();  
+  AP_Show::get_instance()->page_write(0, 1, buffer, "rc output");  
   
   return ret;
 }
@@ -121,20 +110,14 @@ float RC_Channel::rad_z(int8_t inv)
   if(inv == -1) ret *= inv;
 
   ret = constrain_float(ret, -RAD_Z_MAX_RAD_S, RAD_Z_MAX_RAD_S);
+  if(is_zero(ret)) ret = 0.0f;
   
   char buffer[30];
-  sprintf(buffer, "rad_z:%.3frad/s\r\n", ret);  
+  sprintf(buffer, "rad_z:%.3f\r\n", ret);  
 #if ADC_VCP_DEBUG == 1  
   VCPSend((uint8_t *)buffer, strlen(buffer));
 #endif 
-  static float last_ret = ret;
-  if((last_ret != ret) && CHECK_SIGN(last_ret, ret) == 0){
-    SSD1306_Fill(SSD1306_COLOR_BLACK);
-    last_ret = ret;
-  }
-  SSD1306_GotoXY(2, 18*2);
-  SSD1306_Puts(buffer, &Font_7x10, SSD1306_COLOR_WHITE);
-  SSD1306_UpdateScreen(); 
+  AP_Show::get_instance()->page_write(0, 2, buffer, "rc output");
   
   return ret;
 }
@@ -180,15 +163,16 @@ float RC_Channel::vel_y_or_z(int8_t inv, int8_t y_or_z)
   if(inv == -1) ret *= inv;
 
   ret = constrain_float(ret, -limit, limit);
+  if(is_zero(ret)) ret = 0.0f;
   
   char buffer[30];
   switch(y_or_z){
   case 0:{
-    sprintf(buffer, "vel_y:%.3f m/s\r\n", ret);  
+    sprintf(buffer, "vel_y:%.3f\r\n", ret);  
     break;
   }
   case 1:{
-    sprintf(buffer, "rad_z:%.3frad/s\r\n", ret);  
+    sprintf(buffer, "rad_z:%.3f\r\n", ret);  
     break;
   }
   }
@@ -196,14 +180,7 @@ float RC_Channel::vel_y_or_z(int8_t inv, int8_t y_or_z)
 #if ADC_VCP_DEBUG == 1  
   VCPSend((uint8_t *)buffer, strlen(buffer));
 #endif 
-  static float last_ret = ret;
-  if((last_ret != ret) && CHECK_SIGN(last_ret, ret) == 0){
-    SSD1306_Fill(SSD1306_COLOR_BLACK);
-    last_ret = ret;
-  }
-  SSD1306_GotoXY(2, 18*2);
-  SSD1306_Puts(buffer, &Font_7x10, SSD1306_COLOR_WHITE);
-  SSD1306_UpdateScreen(); 
+  AP_Show::get_instance()->page_write(0, 2, buffer, "rc output");
   
   return ret;
 }
