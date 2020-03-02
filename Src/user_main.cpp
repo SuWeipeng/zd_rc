@@ -48,7 +48,7 @@ void loop(void)
   }
   
   if(HAL_GetTick()-time_stamp >= 100){
-    show->show_page(1);
+    show->show_page(0);
     
     // Page 1
     static uint32_t cnt = 0;
@@ -64,8 +64,8 @@ void loop(void)
       break;
     }
     sprintf(c, "%d", cnt++ % 10);
-//    buffer->write(c,sizeof(c)); 
-    buffer->write("buffer",6); 
+    buffer->write(c,sizeof(c)); 
+//    buffer->write("buffer",6); 
     sprintf(buf, "buf :%s \r\n", (uint8_t*)buffer->get_buffer());
     show->page_write(1, 0, buf, head);
     sprintf(buf, "len :%d \r\n", buffer->buf_len());
