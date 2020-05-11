@@ -7,3 +7,6 @@
 [submodule "Libraries/AP_Buffer"]
 	path = Libraries/AP_Buffer
 	url = https://github.com/SuWeipeng/AP_Buffer.git
+[submodule "Libraries/rt-thread"]
+	path = Libraries/rt-thread
+	url = https://github.com/SuWeipeng/rt-thread.git
