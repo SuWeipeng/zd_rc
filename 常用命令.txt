@@ -6,6 +6,10 @@ progen generate -f projects.yaml -p stm32f103c8 -t iar_arm
 progen generate -f projects.yaml -p stm32f103c8 -t uvision5
 progen generate -f projects.yaml -p stm32f103c8 -t make_gcc_arm
 
+progen generate -f projects.yaml -p stm32f103c8-rtt -t iar_arm
+progen generate -f projects.yaml -p stm32f103c8-rtt -t uvision5
+progen generate -f projects.yaml -p stm32f103c8-rtt -t make_gcc_arm
+
 加入 rt-thread 精简内核
 git submodule add https://github.com/SuWeipeng/rt-thread.git Libraries/rt-thread
 

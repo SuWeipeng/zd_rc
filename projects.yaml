@@ -1,6 +1,8 @@
 projects:
   stm32f103c8:
   - project_cubemx.yaml
+  stm32f103c8-rtt:
+  - project_rt-thread.yaml
 settings:
   export_dir:
   - generate_project
